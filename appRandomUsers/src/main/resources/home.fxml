@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import java.net.URL?>
+
+<ScrollPane styleClass="scroll" xmlns:fx="http://javafx.com/fxml" fx:controller="org.api.javafx.APPController" fitToWidth="true" prefHeight="300.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+    <stylesheets><URL value="@estilo.css" /></stylesheets>
+    <VBox spacing="20.0" styleClass="body">
+        <HBox fx:id="connOPT" styleClass="connect_options" alignment="TOP_RIGHT" spacing="20.0">
+            <Button text="Login" styleClass="button" fx:id="btn_login"/>
+            <Button text="Register" styleClass="button" fx:id="btn_register"/>
+        </HBox>
+        <VBox  alignment="CENTER" spacing="20.0" fx:id="gerador" >
+            <Label fx:id="textoBoasVindas" text="Bem-vindo ao Gerador de usuários aleatórios"/>
+            <Label wrapText="true" styleClass="txt" fx:id="explicacao" text="Digite o numero de usuários de 1 a 100 e um codigo de um país dentre esses (AU, BR, CA, CH, DE, DK, ES, FI, FR, GB, IE, IN, IR, MX, NL, NO, NZ, RS, TR, UA, US)"/>
+            <TextField fx:id="ninput" promptText="Digite o numero de usuários" styleClass="input"/>
+            <TextField fx:id="pinput" promptText="Digite o código do país" styleClass="input"/>
+            <Button text="Gerar Usuário" onAction="#aoClicarNoBotao" styleClass="button"/>
+            <Label fx:id="Usuarios" text="Os usuários apareceram aqui"/>
+        </VBox>
+        <VBox alignment="CENTER" spacing="20.0" fx:id="login">
+            <Label fx:id="textoLogin" wrapText="true" text="Faça login para acessar o gerador de usuários" styleClass="txt"/>
+            <TextField fx:id="loginUsername" promptText="Digite seu nome de usuário" styleClass="input"/>
+            <TextField fx:id="loginPassword" promptText="Digite sua senha" styleClass="input"/>
+            <TextField fx:id="loginEmail" promptText="Digite seu email" styleClass="input"/>
+            <Label fx:id="msgLogin" text="" styleClass="txt"/>
+            <Button text="Login" styleClass="button" fx:id="set_login"/>
+            <Button text="Ainda não tem uma conta registre-se" styleClass="redirect" fx:id="redirect_register"/>
+        </VBox>
+        <VBox alignment="CENTER" spacing="20.0" fx:id="register">
+            <Label fx:id="textoRegister" wrapText="true" text="Registre-se para acessar o gerador de usuários" styleClass="txt"/>
+            <TextField fx:id="registreUsername" promptText="Digite seu nome de usuário" styleClass="input"/>
+            <TextField fx:id="registrePassword" promptText="Digite sua senha" styleClass="input"/>
+            <TextField fx:id="registreEmail" promptText="Digite seu email" styleClass="input"/>
+            <Label fx:id="msgRegister" text="" styleClass="txt"/>
+            <Button text="Register" styleClass="button" fx:id="set_register"/>
+            <Button text="Já tem uma conta conecte-se" styleClass="redirect" fx:id="redirect_login"/>
+        </VBox>
+    </VBox>
+</ScrollPane>

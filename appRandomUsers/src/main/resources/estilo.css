@@ -1,0 +1,125 @@
+/* fundo geral */
+.body{
+    -fx-background-color: linear-gradient(to bottom,#1e293b,#0f172a);
+    -fx-font-family: "Segoe UI","Arial";
+    -fx-font-size: 14px;
+    -fx-padding: 40px;
+}
+
+/* título */
+#textoBoasVindas{
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #f1f5f9;
+}
+
+/* texto explicação */
+.txt{
+    -fx-alignment: center;
+    -fx-max-width: 420px;
+    -fx-text-fill: #94a3b8;
+    -fx-font-size: 13px;
+}
+
+/* inputs */
+.input{
+    -fx-pref-width: 260px;
+    -fx-pref-height: 38px;
+
+    -fx-background-color: #1e293b;
+    -fx-text-fill: white;
+
+    -fx-border-color: #334155;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+
+    -fx-padding: 6 10 6 10;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 8,0,0,2);
+}
+
+/* placeholder do input */
+.input .text{
+    -fx-fill: white;
+}
+
+/* input focado */
+.input:focused{
+    -fx-border-color: #3b82f6;
+}
+
+/* botão moderno */
+.button{
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+
+    -fx-background-radius: 6px;
+
+    -fx-pref-width: 180px;
+    -fx-pref-height: 36px;
+
+    -fx-cursor: hand;
+}
+
+/* hover suave */
+.button:hover{
+    -fx-background-color: #1d4ed8;
+}
+
+/* clique */
+.button:pressed{
+    -fx-background-color: #1e40af;
+}
+/* redirect */
+.redirect{
+    -fx-background-color:none;
+    -fx-text-fill: white;
+
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+
+    -fx-background-radius: 6px;
+
+    -fx-pref-width: 180px;
+    -fx-pref-height: 36px;
+
+    -fx-cursor: hand;
+}
+/* label de resultado */
+#Usuarios{
+    -fx-alignment: center;
+    -fx-text-fill: #e2e8f0;
+    -fx-font-size: 13px;
+    -fx-wrap-text: true;
+    -fx-max-width: 420px;
+}
+/* scrollpane fundo */
+.scroll{
+    -fx-background-color: #0f172a;
+}
+
+/* remove fundo branco interno */
+.scroll .viewport{
+    -fx-background-color: transparent;
+}
+
+/* remove fundo padrão */
+.scroll .content{
+    -fx-background-color: transparent;
+}
+
+.scroll-bar{
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb{
+    -fx-background-color: #334155;
+    -fx-background-radius: 5px;
+}
+
+.scroll-bar .thumb:hover{
+    -fx-background-color: #475569;
+}

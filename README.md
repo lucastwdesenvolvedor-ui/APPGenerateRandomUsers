@@ -126,3 +126,5 @@ Este projeto tem como objetivo demonstrar conhecimentos em:
 * Integração com banco de dados
 * Estruturação de backend
 * Consumo de APIs externas
+---
+* Projeto ainda em desenvolvimento

@@ -7,8 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.json.JSONArray;
 import org.api.getApi.HttpClientLib;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import static org.api.checagem.check.*;
@@ -23,16 +23,16 @@ public class APPController {
     private HBox connOPT;
 
     @FXML
-    private Button btn_login,btn_register;
+    private Button btn_login, btn_register;
 
     @FXML
     private VBox login;
 
     @FXML
-    private Button set_login , redirect_register;
+    private Button set_login, redirect_register;
 
     @FXML
-    private TextField loginUsername , loginEmail , loginPassword;
+    private TextField loginUsername, loginEmail, loginPassword;
 
     @FXML
     private Label msgLogin;
@@ -41,10 +41,10 @@ public class APPController {
     private VBox register;
 
     @FXML
-    private Button set_register , redirect_login;
+    private Button set_register, redirect_login;
 
     @FXML
-    private TextField registreUsername , registreEmail , registrePassword;
+    private TextField registreUsername, registreEmail, registrePassword;
 
     @FXML
     private Label msgRegister;
@@ -56,10 +56,10 @@ public class APPController {
     private Label Usuarios;
 
     @FXML
-    private TextField ninput , pinput;
+    private TextField ninput, pinput;
 
 
-    public void loginPage(){
+    public void loginPage() {
         gerador.setVisible(false);
         gerador.setManaged(false);
 
@@ -73,7 +73,8 @@ public class APPController {
         login.setManaged(true);
 
     }
-    public void registerPage(){
+
+    public void registerPage() {
         gerador.setVisible(false);
         gerador.setManaged(false);
 
@@ -87,7 +88,8 @@ public class APPController {
         login.setManaged(false);
 
     }
-    public void randomPage(){
+
+    public void randomPage() {
         gerador.setVisible(true);
         gerador.setManaged(true);
 
@@ -105,87 +107,88 @@ public class APPController {
     @FXML
     public void initialize() {
 
-                loginPage();
-                set_login.setOnAction(e ->{
+        loginPage();
+        set_login.setOnAction(e -> {
 
-                    String Username = loginUsername.getText();
-                    String Email = loginEmail.getText();
-                    String Password = loginPassword.getText();
+            String Username = loginUsername.getText();
+            String Email = loginEmail.getText();
+            String Password = loginPassword.getText();
 
-                    if(Username.isEmpty() || Email.isEmpty() || Password.isEmpty()){
-                        msgLogin.setText("Preencha todos os campos para fazer login.");
-                    }
-                    else{
-                        String url = db + "/get?key=" + key;
-                        try{
+            if (Username.isEmpty() || Email.isEmpty() || Password.isEmpty()) {
+                msgLogin.setText("Preencha todos os campos.");
+                return;
+            }
 
-                            String req = HttpClientLib.get(url);
-                            JSONArray res = new JSONArray(req);
-                            boolean encontrou = false;
+            try {
 
-                            for(int i = 0 ; i < res.length() ; i++){
-
-                                JSONObject user = res.getJSONObject(i);
-
-                                String name = user.getString("nome");
-                                String email = user.getString("email");
-                                String senha = user.getString("senha");
-
-                                if(name.equals(Username) && senha.equals(Password) && email.equals(Email)){
-                                    encontrou = true;
-                                    randomPage();
-                                    break;
-                                }
-                            }
-
-                            if(!encontrou){
-                                msgLogin.setText("ERRO ou Senha , usuario ou email errado/os.");
-                            }
-
-                        }
-                        catch (Exception exception){
-                            msgLogin.setText("ERRO ou Senha , usuario ou email errado/os");
-                        }
-                    }
-                });
-            set_register.setOnAction(e ->{
-                String nome = registreUsername.getText();
-                String email =  registreEmail.getText();
-                String senha = registrePassword.getText();
-                String verificarEmail = "^[\\w!#$%&'*+/=?^_{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?$";
-                if (!email.matches(verificarEmail)){
-                    msgRegister.setText("insira um email valido");
-                    return;
-                }
-                if(!(checkPass(senha).equals(""))){
-                    msgRegister.setText(checkPass(senha));
-                    return;
-                }
-                try{
-                    HttpClientLib.post(db,key,nome,email,senha,"1");
-                    randomPage();
-                } catch (Exception ex) {
-                    msgRegister.setText("ops ocorreu um erro no seu cadastro");
-                    throw new RuntimeException(ex);
-                }
-
-            });
+                String req = HttpClientLib.get(
+                        db + "/get?key=" + key + "&nome=" + Username + "&senha=" + Password + "&email=" + Email
+                );
 
 
-            btn_login.setOnAction(event -> {
-                loginPage();
-            });
+                randomPage();
+            }catch (Exception ex) {
+                msgLogin.setText("Login inválido.");
+            }
+        });
+        set_register.setOnAction(e -> {
 
-            btn_register.setOnAction(event -> {
-                registerPage();
-            });
+            String nome = registreUsername.getText();
+            String email = registreEmail.getText();
+            String senha = registrePassword.getText();
 
-            redirect_register.setOnAction(event -> {
-                registerPage();
-            });
-            redirect_login.setOnAction(event -> {
-                loginPage();
-            });
+            if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
+                msgRegister.setText("Preencha tudo");
+                return;
+            }
+
+            String verificarEmail = "^[\\w!#$%&'*+/=?^_{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?$";
+            // ✅ RESTAURADO: validação de email
+
+            if (!email.matches(verificarEmail)) {
+                msgRegister.setText("insira um email valido");
+                return;
+            }
+
+            if (!(checkPass(senha).equals(""))) {
+                msgRegister.setText(checkPass(senha));
+                return;
+            }
+            // ✅ RESTAURADO: validação de senha
+
+            try {
+
+                HttpClientLib.post(
+                        db,
+                        key,
+                        nome,
+                        email,
+                        senha,
+                        "/post"
+                );
+
+                randomPage();
+
+            } catch (Exception ex) {
+                msgRegister.setText("Erro no cadastro");
+            }
+        });
+
+
+        btn_login.setOnAction(event -> {
+            loginPage();
+        });
+
+        btn_register.setOnAction(event -> {
+            registerPage();
+        });
+
+        redirect_register.setOnAction(event -> {
+            registerPage();
+        });
+        redirect_login.setOnAction(event -> {
+            loginPage();
+        });
 
     }
 
@@ -195,21 +198,20 @@ public class APPController {
         String numero = ninput.getText();
         String pais = pinput.getText().toUpperCase();
 
-        if(numero.isEmpty() || pais.isEmpty()){
+        if (numero.isEmpty() || pais.isEmpty()) {
             Usuarios.setText("Preencha os campos para gerar os usuários.");
             return;
         }
 
-        if(!checkCountry(pais)){
+        if (!checkCountry(pais)) {
             Usuarios.setText("Código do país inválido. Digite um código válido. paises disponiveis AU, BR, CA, CH, DE, DK, ES, FI, FR, GB, IE, IN, IR, MX, NL, NO, NZ, RS, TR, UA, US.");
             return;
         }
 
-        if(!checkNumber(numero)) {
+        if (!checkNumber(numero)) {
             Usuarios.setText("Número de usuários inválido. Digite um número entre 1 e 100.");
             return;
-        }
-        else{
+        } else {
             Usuarios.setText("Gerando usuários...");
         }
 
@@ -218,7 +220,7 @@ public class APPController {
 
         JSONArray results = new JSONArray(req);
 
-        for(int i = 0; i < results.length(); i++){
+        for (int i = 0; i < results.length(); i++) {
 
             JSONObject user = results.getJSONObject(i);
 
@@ -229,7 +231,7 @@ public class APPController {
             String paisUser = user.getString("pais");
             String cidade = user.getString("cidade");
 
-            if(Usuarios.getText().equals("Gerando usuários...")){
+            if (Usuarios.getText().equals("Gerando usuários...")) {
                 Usuarios.setText("");
             }
 

@@ -16,28 +16,39 @@ public class HttpClientLib {
                     .GET()
                     .build();
             HttpResponse<String> response = client.send( request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() != 200) {
+                throw new RuntimeException("Erro HTTP");
+            }
             return response.body();
+
         }catch (IOException | InterruptedException e) {
             throw new RuntimeException("HTTP GET request failhou", e);
         }
     }
-    public static void post(String url, String key , String nome ,String email , String pass ,String log){
+    public static String post(String url, String key, String nome, String email, String senha, String rota) {
         try {
-            String data = "key="+key+"&nome="+nome+"&email="+email+"&senha="+pass+"&log="+"1";
-            System.out.println(data);
+
+            String data = "key=" + key +
+                    "&nome=" + nome +
+                    "&email=" + email +
+                    "&senha=" + senha;
+
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(url+"/post"))
+                    .uri(URI.create(url + rota))
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .POST(HttpRequest.BodyPublishers.ofString(data))
                     .build();
-            HttpResponse<String> response = client.send( request, HttpResponse.BodyHandlers.ofString());
-            System.out.println(response.statusCode());
-            System.out.println(response.body());
-            System.out.println("post Completo");
-        }catch (IOException | InterruptedException e) {
-            System.out.println("post ERROR");
-            throw new RuntimeException("HTTP GET request failhou", e);
 
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() != 200 && response.statusCode() != 201) {
+                throw new RuntimeException("Erro HTTP: " + response.body());
+            }
+
+            return response.body();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

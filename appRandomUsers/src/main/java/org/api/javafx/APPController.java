@@ -1,6 +1,7 @@
 package org.api.javafx;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,6 +12,8 @@ import org.api.getApi.HttpClientLib;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import static org.api.checagem.check.*;
 
 public class APPController {
@@ -18,7 +21,7 @@ public class APPController {
     String key = dotenv.get("API_DB_KEY");
     private static final String linkRandom = dotenv.get("API_RAND_USERS");
     private static final String db = dotenv.get("API_DB");
-
+    private int id;
     @FXML
     private HBox connOPT;
 
@@ -58,6 +61,8 @@ public class APPController {
     @FXML
     private TextField ninput, pinput;
 
+    @FXML
+    private Button btn_logout;
 
     public void loginPage() {
         gerador.setVisible(false);
@@ -124,8 +129,8 @@ public class APPController {
                 String req = HttpClientLib.get(
                         db + "/get?key=" + key + "&nome=" + Username + "&senha=" + Password + "&email=" + Email
                 );
-
-
+                   JSONObject obj = new JSONObject(req);
+                   id = obj.getInt("id");
                 randomPage();
             }catch (Exception ex) {
                 msgLogin.setText("Login inválido.");
@@ -143,7 +148,6 @@ public class APPController {
             }
 
             String verificarEmail = "^[\\w!#$%&'*+/=?^_{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?$";
-            // ✅ RESTAURADO: validação de email
 
             if (!email.matches(verificarEmail)) {
                 msgRegister.setText("insira um email valido");
@@ -154,7 +158,6 @@ public class APPController {
                 msgRegister.setText(checkPass(senha));
                 return;
             }
-            // ✅ RESTAURADO: validação de senha
 
             try {
 
@@ -188,6 +191,17 @@ public class APPController {
         });
         redirect_login.setOnAction(event -> {
             loginPage();
+        });
+
+        btn_logout.setOnAction(event ->{
+            try {
+                HttpClientLib.get("http://localhost:8080/DEL?id="+id);
+                Platform.exit();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         });
 
     }

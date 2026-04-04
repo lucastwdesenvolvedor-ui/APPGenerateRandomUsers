@@ -13,6 +13,7 @@
         <HBox fx:id="connOPT" styleClass="connect_options" alignment="TOP_RIGHT" spacing="20.0">
             <Button text="Login" styleClass="button" fx:id="btn_login"/>
             <Button text="Register" styleClass="button" fx:id="btn_register"/>
+            <Button text="LogOut" styleClass="button" fx:id="btn_logout"/>
         </HBox>
         <VBox  alignment="CENTER" spacing="20.0" fx:id="gerador" >
             <Label fx:id="textoBoasVindas" text="Bem-vindo ao Gerador de usuários aleatórios"/>

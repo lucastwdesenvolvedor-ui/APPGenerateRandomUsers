@@ -17,7 +17,7 @@ public class HttpClientLib {
                     .build();
             HttpResponse<String> response = client.send( request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() != 200) {
-                throw new RuntimeException("Erro HTTP");
+                throw new RuntimeException("Erro HTTP:" + response.body());
             }
             return response.body();
 
